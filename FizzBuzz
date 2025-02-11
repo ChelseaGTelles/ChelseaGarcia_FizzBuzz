@@ -1,0 +1,38 @@
+module FizzBuzz where
+
+-- Función que usa la función mod (nativa de Haskell) para verificar con un if el módulo, de lo contrario manejar el número en palabras.
+fizzBuzz :: Int -> String
+fizzBuzz n
+    | n `mod` 15 == 0 = "FizzBuzz!"
+    | n `mod` 3  == 0 = "Fizz!"
+    | n `mod` 5  == 0 = "Buzz!"
+    | otherwise       = number n
+
+-- Función para la conversión de números a palabras.
+lessThan20 :: Int -> String           
+lessThan20 n
+    | n > 0 && n < 20 = 
+        let answers = words ("one two three four five six seven eight nine ten " ++
+                        "eleven twelve thirteen fourteen fifteen sixteen " ++
+                        "seventeen eighteen nineteen")
+        in answers !! (n - 1)
+
+-- Función para la conversión de decenas a palabras.
+tens :: Int -> String
+tens n 
+    | n > 1 && n <= 9 =
+        answers !! (n - 2)
+        where
+            answers = words "twenty thirty forty fifty sixty seventy eighty ninety"
+
+-- Función que identifica sobre que número se tiene que representar, agregando - de ser necesario.
+number :: Int -> String
+number n 
+    | n > 0 && n < 20 = lessThan20 n
+    | n `mod` 10 == 0 && n < 100 = tens (n `div` 10)
+    | n < 100 = tens (n `div` 10) ++ "-" ++ lessThan20 (n `mod` 10)
+    | n == 100 = "one hundred"
+
+-- Función de Haskell para inicializar el programa principal.
+main :: IO ()
+main = mapM_ (putStrLn . fizzBuzz) [1..100]
